@@ -1,0 +1,50 @@
+<?php
+/**
+ * @file
+ *  Utility to work with linked data resources.
+ * @copyright Copyright(c) 2012 Christopher Skene
+ * @license GPL v2 http://www.fsf.org/licensing/licenses/gpl.html
+ * @author Chris Skene chris at xtfer dot com
+ */
+
+/**
+ * Poor mans autoloader for EasyRDF
+ *
+ * return \LinkedDataResource
+ */
+function ldr_initialise() {
+  module_load_include('php', 'ldr', 'includes/LinkedDataResource');
+  $ldr = new LinkedDataResource();
+
+  return $ldr;
+}
+
+/**
+ * Load and return a linked data resource
+ *
+ * @param $uri
+ *  The URI to load
+ *
+ * @return \EasyRdf_Graph
+ *  A representation of a Linked Data Resource
+ */
+function ldr_resource($uri) {
+  $ldr = ldr_initialise();
+
+  $ldr->load($uri);
+
+  return $ldr->resource();
+}
+
+/**
+ * Load a set of linked data resources
+ */
+function ldr_resources($uris) {
+  $resources = array();
+
+  foreach ($uris as $uri) {
+    $resources[] = ldr_resource($uri);
+  }
+
+  return $resources;
+}
