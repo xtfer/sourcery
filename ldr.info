@@ -1,6 +1,0 @@
-name = Linked Data Resource
-description = "Utility module for accessing linked data resources."
-core = 7.x
-; files[] = aggregator.test
-; configure = admin/config/services/aggregator/settings
-; stylesheets[all][] = aggregator.css

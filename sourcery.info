@@ -1,0 +1,9 @@
+name = Sourcery
+description = "Utility module for accessing linked data resources."
+core = 7.x
+
+php = 5.3
+
+dependencies[] = xu
+
+files[] = includes/ParserInterfacees[] = includes/Resource.php

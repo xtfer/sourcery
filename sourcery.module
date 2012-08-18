@@ -1,0 +1,103 @@
+<?php
+/**
+ * @file
+ *  Utility to work with linked data resources.
+ * @copyright Copyright(c) 2012 Christopher Skene
+ * @license GPL v2 http://www.fsf.org/licensing/licenses/gpl.html
+ * @author Chris Skene chris at xtfer dot com
+ */
+
+/** Drupal Hooks *********************************************************/
+
+/**
+ * Implements hook_help().
+ */
+function sourcery_help($path, $arg) {
+  $output = '';
+
+  switch ($path) {
+    case 'admin/help#sourcery':
+      // Display the introduction paragraph.
+      $output .= '<p>' . t('Sourcery is a tool for mapping linked data resources to local entities.') . '</p>';
+  }
+
+  return $output;
+}
+
+/** Ctools Plugins ******************************************************/
+
+/**
+ * Implements HOOK_ctools_plugin_directory()
+ *
+ * Tell ctools where our plugins live.
+ */
+function sourcery_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'sourcery') {
+    return 'plugins/' . $plugin;
+  }
+}
+
+/**
+ * Implements HOOK_ctools_plugin_TYPE()
+ *
+ * Inform CTools about mapper plugins
+ */
+function sourcery_ctools_plugin() {
+  return array(
+    'cache' => FALSE, // change to true for release
+  );
+}
+
+/**
+ * Load a plugin
+ */
+function sourcery_load_plugin($type, $name) {
+  ctools_include('plugins');
+  return ctools_get_plugins('sourcery', $type, $name);
+}
+
+/**
+ * Load all plugins of a type
+ */
+function sourcery_load_plugins($type) {
+  ctools_include('plugins');
+  return ctools_get_plugins('sourcery', $type);
+}
+
+/** Sourcery ************************************************************/
+
+/**
+ * Load and return a linked data resource
+ *
+ * @param $parser_type
+ *  The parser type to use for this resource
+ *
+ * @return \SourceryResource
+ *  A representation of a data resource
+ */
+function sourcery_resource($parser_type) {
+
+  $sourcery = new SourceryResource($parser_type);
+
+  return $sourcery;
+}
+
+/**
+ * Instantiate an argument handler
+ */
+function sourcery_arg_handler() {
+  return new \Xu\Component\Arg\ArgHandler();
+}
+
+/**
+ * Create a parser object
+ */
+function sourcery_invoke_parser($name) {
+  $config = sourcery_load_plugin('parser', $name);
+  if (class_exists($config['class'])) {
+    $parser = new $config['class']();
+    if ($parser instanceof SourceryParserInterface) {
+      return $parser;
+    }
+  }
+}
