@@ -1,0 +1,48 @@
+<?php
+/**
+ * @file
+ *  Examples for Sourcery
+ * @copyright Copyright(c) 2012 Christopher Skene
+ * @license GPL v2 http://www.fsf.org/licensing/licenses/gpl.html
+ * @author Chris Skene chris at xtfer dot com
+ */
+
+/**
+ * Implements HOOK_ctools_plugin_directory()
+ *
+ * Tell ctools where our plugins live.
+ */
+function sourcery_examples_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'sourcery') {
+    return 'plugins/' . $plugin;
+  }
+}
+
+/**
+ * Demonstrates the use of Sourcery by retrieving data for Ludwig van
+ * Beethoven from BBC Music
+ */
+function sourcery_example_source_pull() {
+
+  // URL example
+  $destination = 'http://www.bbc.co.uk/music/artists/1f9df192-a621-4f54-8850-2c5373b7eac9.json';
+
+  // Run a request using the default
+  // This prepares to send the request to the $destination via the defaults
+  $source = sourcery_source(SOURCERY_DEFAULT_SOURCE_PLUGIN);
+  $result = $source->pull($destination);
+
+  print_r($result);
+
+  // Key example
+  $key = '1f9df192-a621-4f54-8850-2c5373b7eac9';
+
+  // Run a request using the 'sourcery_example_source' plugin, which
+  // demonstrates use of Collections, as well as setting the Base URL
+  $source = sourcery_source('sourcery_example_source');
+  $source->setCollection('artists');
+  $result = $source->pull($key);
+  // $result = $source->request($key) also works, for a 'pull'
+
+  print_r($result);
+}

@@ -1,0 +1,5 @@
+name = Sourcery Examples
+description = "Examples for implementing and using Sourcery."
+core = 7.x
+
+php = 5.3
