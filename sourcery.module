@@ -7,6 +7,23 @@
  * @author Chris Skene chris at xtfer dot com
  */
 
+use \Xu\Component\Helpers\ArrayHelper as ArrayHelper;
+
+/**
+ * Define a default source plugin
+ */
+const SOURCERY_DEFAULT_SOURCE_PLUGIN = 'default_source';
+
+/**
+ * Define a default source plugin
+ */
+const SOURCERY_DEFAULT_TRANSPORT_PLUGIN = 'default_transport';
+
+/**
+ * Define a default source plugin
+ */
+const SOURCERY_DEFAULT_PARSER_PLUGIN = 'default_parser';
+
 /** Drupal Hooks *********************************************************/
 
 /**
@@ -50,6 +67,14 @@ function sourcery_ctools_plugin() {
 
 /**
  * Load a plugin
+ *
+ * @param string $type
+ *  The type of plugin to load. Possible values are 'parser'.
+ * @param string $name
+ *  Name of the plugin
+ *
+ * @return array
+ *  An array of plugin information
  */
 function sourcery_load_plugin($type, $name) {
   ctools_include('plugins');
@@ -58,6 +83,12 @@ function sourcery_load_plugin($type, $name) {
 
 /**
  * Load all plugins of a type
+ *
+ * @param string $type
+ *  The type of plugin to load. Possible values are 'parser'.
+ *
+ * @return array
+ *  An array of plugin information
  */
 function sourcery_load_plugins($type) {
   ctools_include('plugins');
@@ -67,37 +98,161 @@ function sourcery_load_plugins($type) {
 /** Sourcery ************************************************************/
 
 /**
- * Load and return a linked data resource
+ * Load and return a Source.
  *
- * @param $parser_type
- *  The parser type to use for this resource
+ * @param string $plugin [optional]
+ *  The source plugin to use. Defaults to 'default_source'.
  *
- * @return \SourceryResource
- *  A representation of a data resource
+ * @return \Sourcery\Components\Controller
+ *  A controller to handle requests to the source
  */
-function sourcery_resource($parser_type) {
+function sourcery_source($plugin = SOURCERY_DEFAULT_SOURCE_PLUGIN) {
 
-  $sourcery = new SourceryResource($parser_type);
+  // Create the Sourcery Controller to handle the request
+  $sourcery = new \Sourcery\Components\Controller($plugin);
 
   return $sourcery;
 }
 
 /**
- * Instantiate an argument handler
+ * Create a source object
+ *
+ * @param string $plugin_name
+ *  Name of the source type to invoke
+ *
+ * @return \Sourcery\Components\Source\SourceInterface|bool
+ *  The source, or FALSE
  */
-function sourcery_arg_handler() {
-  return new \Xu\Component\Arg\ArgHandler();
+function sourcery_invoke_source($plugin_name = SOURCERY_DEFAULT_SOURCE_PLUGIN) {
+  $config = sourcery_load_plugin('source', $plugin_name);
+  if (class_exists($config['class'])) {
+    $source = new $config['class']();
+    if ($source instanceof \Sourcery\Components\Source\SourceInterface) {
+      if (sourcery_prerequisites($config)) {
+        return $source;
+      }
+    }
+  }
+
+  return FALSE;
 }
 
 /**
  * Create a parser object
+ *
+ * @param string $type
+ *  Name of the parser type to invoke
+ *
+ * @return \Sourcery\Components\Parser\ParserInterface|bool
+ *  The parser, or FALSE
  */
-function sourcery_invoke_parser($name) {
-  $config = sourcery_load_plugin('parser', $name);
+function sourcery_invoke_parser($type) {
+  $config = sourcery_load_plugin('parser', $type);
   if (class_exists($config['class'])) {
     $parser = new $config['class']();
-    if ($parser instanceof SourceryParserInterface) {
-      return $parser;
+    if ($parser instanceof \Sourcery\Components\Parser\ParserInterface) {
+      if (sourcery_prerequisites($config)) {
+        return $parser;
+      }
     }
   }
+
+  return FALSE;
+}
+
+/**
+ * Create a transport object
+ *
+ * @param string $type
+ *  Name of the transport type to invoke
+ *
+ * @return \Sourcery\Components\Transport\TransportInterface|bool
+ *  The parser, or FALSE
+ */
+function sourcery_invoke_transport($type) {
+  $config = sourcery_load_plugin('parser', $type);
+  if (class_exists($config['class'])) {
+    $transport = new $config['class']();
+    if ($transport instanceof \Sourcery\Components\Transport\TransportInterface) {
+      if (sourcery_prerequisites($config)) {
+        return $transport;
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+/**
+ * Check that the prerequisites for a plugin are available
+ *
+ * This checks the 'requirements' key in the plugin for an array of modules. If
+ * the key exists, all modules must be present. If the key is absent, this function
+ * simply returns TRUE.
+ *
+ * @param array $config
+ *  An array of plugin configuration parameters
+ *
+ * @return bool
+ *  TRUE, if requirements pass, or FALSE otherwise
+ */
+function sourcery_prerequisites($config) {
+  if (isset($config['requirements']) && !empty($config['requirements'])) {
+    $result = _sourcery_all_true($config['requirements'], 'module_exists');
+    if (isset($config['requirements']) && _sourcery_assert_true($result,'result')) {
+      return TRUE;
+    }
+    else {
+      drupal_set_message('Sourcery could not load dependency. Please ensure the ' . $result['error'] . ' module is installed');
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}
+
+/**
+ *
+ */
+/**
+ * Check all items in an array via a callback
+ *
+ * @param array $data
+ * @param string $callback
+ *
+ * @return array|bool
+ */
+function _sourcery_all_true(array $data, $callback) {
+  if (!function_exists($callback)) {
+    // @todo should throw an error
+    return FALSE;
+  }
+
+  if (is_array($data) && !empty($data)) {
+    foreach($data as $key => $datum) {
+      if (call_user_func($callback, $datum) == FALSE) {
+        return array(
+          'result' => FALSE,
+          'error' => $datum,
+        );
+      }
+    }
+  }
+
+  return array(
+    'result' => TRUE,
+  );
+}
+
+/**
+ * Check that a given value is TRUE
+ */
+function _sourcery_assert_true($data, $key) {
+  if (isset($data['key'])) {
+    if ($data[$key] == TRUE) {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }

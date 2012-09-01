@@ -13,11 +13,12 @@ interface ParserInterface {
   /**
    * Retrieve a resource from a source
    *
-   * @param $args
-   *  Arguments to load the resource
-   *
    * @abstract
+   *
+   * @param $data
+   *  The fetched data from which to extract keys
+   *
    * @return mixed
    */
-  public function get($args);
+  public function extract($data);
 }
