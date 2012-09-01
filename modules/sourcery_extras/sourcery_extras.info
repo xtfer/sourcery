@@ -1,0 +1,5 @@
+name = Sourcery Extras
+description = "Additional plugins for Sourcery."
+core = 7.x
+
+php = 5.3
