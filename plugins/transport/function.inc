@@ -16,26 +16,77 @@ $plugin = array(
 );
 
 /**
- * Defines a Transport plugin to use callbacks instead of accessing a URL
+ * Defines a Transport plugin to use callbacks instead of accessing a URL.
+ *
+ * Because we are simply calling a function, specified in the 'destination'
+ * parameter, all implemented action callbacks simply return the same thing.
  */
 class SourceryCallbackTransport
   extends \Sourcery\Components\Transport\Transport
-  implements \Sourcery\Components\Transport\TransportInterface {
+  implements \Sourcery\Components\Actions\Crud {
 
   /**
    * Action a resource using a callback
-   *
-   * Implements TransportInterface:transport()
    *
    * @param \Sourcery\Components\Request\Request $request
    *  The request object
    *
    * @return mixed
    */
-  public function request(\Sourcery\Components\Request\Request $request) {
-    if (function_exists($request->getDestination())) {
-      return call_user_func($request->getDestination(), $request->requestArgs);
+  protected function request(\Sourcery\Components\Request\Request $request) {
+    $function = $request->requestArgs['function'];
+    unset($request->requestArgs['function']);
+
+    $args['key'] = $request->getDestination();
+    $args['extra'] = $request->requestArgs;
+
+    if (function_exists($function)) {
+      return call_user_func($function, $request->requestArgs);
     }
+  }
+
+  /**
+   * Request to 'create' an object at a remote source
+   *
+   * @param \Sourcery\Components\Request\Request $request
+   *
+   * @return mixed
+   */
+  public function actionCreate(\Sourcery\Components\Request\Request $request) {
+    return $this->request($request);
+  }
+
+  /**
+   * Request to 'delete' an object at a remote source
+   *
+   * @param \Sourcery\Components\Request\Request $request
+   *
+   * @return mixed
+   */
+  public function actionDelete(\Sourcery\Components\Request\Request $request) {
+    return $this->request($request);
+  }
+
+  /**
+   * Request to 'read' an object at a remote source
+   *
+   * @param \Sourcery\Components\Request\Request $request
+   *
+   * @return mixed
+   */
+  public function actionRead(\Sourcery\Components\Request\Request $request) {
+    return $this->request($request);
+  }
+
+  /**
+   * Request to 'update' an object at a remote source
+   *
+   * @param \Sourcery\Components\Request\Request $request
+   *
+   * @return mixed
+   */
+  public function actionUpdate(\Sourcery\Components\Request\Request $request) {
+    return $this->request($request);
   }
 
 }

@@ -22,17 +22,4 @@ class Transport
     // $request->action and determine (for example) which HTTP method to
     // use.
   }
-
-  /**
-   * Retrieve a resource from a source
-   *
-   * @param \Sourcery\Components\Request\Request $request
-   *  The request object
-   *
-   * @return mixed
-   */
-  public function request(\Sourcery\Components\Request\Request $request) {
-    // Do nothing by default.
-  }
-
 }

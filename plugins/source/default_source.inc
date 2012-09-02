@@ -17,7 +17,7 @@ $plugin = array(
 
 class SourceryDefaultSource
   extends \Sourcery\Components\Source\Source
-  implements \Sourcery\Components\Source\SourceInterface {
+  implements \Sourcery\Components\Actions\Read {
 
   /**
    * Overrides Source::Prepare()
@@ -26,6 +26,19 @@ class SourceryDefaultSource
    */
   public function prepare(\Sourcery\Components\Request\Request $request) {
     // Do nothing
+  }
+
+  /**
+   * Request to 'read' an object at a remote source
+   *
+   * @param \Sourcery\Components\Request\Request $request
+   *
+   * @return mixed
+   */
+  public function actionRead(\Sourcery\Components\Request\Request $request) {
+    // Do nothing
+    // Even though we implement actionRead(), there is actually nothing for
+    // us to do in this context.
   }
 
 }

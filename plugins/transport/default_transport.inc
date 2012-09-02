@@ -20,25 +20,50 @@ $plugin = array(
  */
 class SourceryDefaultTransport
   extends \Sourcery\Components\Transport\Transport
-  implements \Sourcery\Components\Transport\TransportInterface {
+  implements \Sourcery\Components\Actions\Read {
+
+  /**
+   * Options array for drupal_http_request
+   */
+  protected $options = array();
+
+  /**
+   * The destination URL
+   */
+  protected $url;
 
   /**
    * Retrieve a resource from a source
+   */
+  protected function request(\Sourcery\Components\Request\Request $request) {
+    $result = drupal_http_request($this->url, $this->options);
+    if ($result->code != 200) {
+      watchdog('sourcery', 'Request failed with error code: @code', array('@code' => $result->code), WATCHDOG_NOTICE);
+      $request->resultError = $result;
+    }
+    else {
+      $request->resultRaw = $result;
+    }
+  }
+
+  /**
+   * Request to 'read' an object at a remote source
    *
    * @param \Sourcery\Components\Request\Request $request
-   *  The request object
    *
    * @return mixed
    */
-  public function request(\Sourcery\Components\Request\Request $request) {
+  public function actionRead(\Sourcery\Components\Request\Request $request) {
 
     // Build our $options array including the $data payload
-    $options = $request->requestArgs;
+    $this->options = $request->requestArgs;
     if (!isset($options['data'])) {
-      $options['data'] = $request->getData();
+      $this->options['data'] = $request->getData();
     }
 
-    return drupal_http_request($request->getDestination(), $options);
-  }
+    // Set the destination
+    $this->url = $request->getDestination();
 
+    $this->request($request);
+  }
 }

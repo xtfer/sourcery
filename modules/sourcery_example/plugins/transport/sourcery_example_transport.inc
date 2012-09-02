@@ -18,22 +18,20 @@ $plugin = array(
 /**
  * Example Transport
  *
- * This is a copy of the default transport plugin
+ * This is a simplified version of the default transport plugin
  */
 class SourceryExampleTransport
   extends \Sourcery\Components\Transport\Transport
-  implements \Sourcery\Components\Transport\TransportInterface {
+  implements \Sourcery\Components\Actions\Read {
 
   /**
-   * Retrieve a resource from a source
+   * Request to 'read' an object at a remote source
    *
    * @param \Sourcery\Components\Request\Request $request
-   *  The request object
    *
    * @return mixed
    */
-  public function request(\Sourcery\Components\Request\Request $request) {
-
+  public function actionRead(\Sourcery\Components\Request\Request $request) {
     $url = $request->getDestination();
     $options = $request->requestArgs;
 

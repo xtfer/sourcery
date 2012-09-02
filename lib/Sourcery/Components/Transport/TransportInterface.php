@@ -20,16 +20,4 @@ interface TransportInterface {
    * Optionally, modify the $request object before firing
    */
   public function prepare(\Sourcery\Components\Request\Request $request);
-
-  /**
-   * Retrieve a resource from a source
-   *
-   * @param \Sourcery\Components\Request\Request $request
-   *  The request object
-   *
-   * @abstract
-   * @return mixed
-   */
-  public function request(\Sourcery\Components\Request\Request $request);
-
 }

@@ -30,7 +30,7 @@ function sourcery_example_source_pull() {
   // Run a request using the default
   // This prepares to send the request to the $destination via the defaults
   $source = sourcery_source(SOURCERY_DEFAULT_SOURCE_PLUGIN);
-  $result = $source->pull($destination);
+  $result = $source->request($destination, 'read');
 
   print_r($result);
 
@@ -41,7 +41,7 @@ function sourcery_example_source_pull() {
   // demonstrates use of Collections, as well as setting the Base URL
   $source = sourcery_source('sourcery_example_source');
   $source->setCollection('artists');
-  $result = $source->pull($key);
+  $result = $source->request($key, 'read');
   // $result = $source->request($key) also works, for a 'pull'
 
   print_r($result);
