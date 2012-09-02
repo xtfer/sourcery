@@ -103,13 +103,13 @@ function sourcery_load_plugins($type) {
  * @param string $plugin [optional]
  *  The source plugin to use. Defaults to 'default_source'.
  *
- * @return \Sourcery\Components\Controller
+ * @return \Sourcery\Components\Sourcerer
  *  A controller to handle requests to the source
  */
 function sourcery_source($plugin = SOURCERY_DEFAULT_SOURCE_PLUGIN) {
 
-  // Create the Sourcery Controller to handle the request
-  $sourcery = new \Sourcery\Components\Controller($plugin);
+  // Create the Sourcery Sourcerer to handle the request
+  $sourcery = new \Sourcery\Components\Sourcerer($plugin);
 
   return $sourcery;
 }

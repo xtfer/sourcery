@@ -33,7 +33,7 @@ const SOURCERY_REQUEST_TYPE_RESOURCE = 'resource';
  * The Request object.
  *
  * This is used internally by Sourcery to track the properties of a request. It
- * is called by the Controller, then passed sequentially to the Source, Transport,
+ * is called by the Sourcerer, then passed sequentially to the Source, Transport,
  * and Parser.
  */
 class Request {
