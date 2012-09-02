@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * --Description--
+ *  Defines a basic Source.
  * @copyright Copyright(c) 2012 Christopher Skene
  * @license GPL v2 http://www.fsf.org/licensing/licenses/gpl.html
  * @author Chris Skene chris at xtfer dot com
@@ -15,6 +15,12 @@ $plugin = array(
   'description' => t('Basic Source.'),
 );
 
+/**
+ * The default Source plugin.
+ *
+ * This can be used in combination with the default Transport plugin to retrieve
+ * a resource using a simple HTTP GET.
+ */
 class SourceryDefaultSource
   extends \Sourcery\Components\Source\Source
   implements \Sourcery\Components\Actions\Read {

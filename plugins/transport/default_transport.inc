@@ -8,10 +8,10 @@
  */
 
 $plugin = array(
-  'name' => 'default_transport',
-  'module' => 'sourcery',
-  'class' => 'SourceryDefaultTransport',
-  'label' => t('Default Transport'),
+  'name'        => 'default_transport',
+  'module'      => 'sourcery',
+  'class'       => 'SourceryDefaultTransport',
+  'label'       => t('Default Transport'),
   'description' => t('Parser to fetch resources using drupal_http_request().'),
 );
 
