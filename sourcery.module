@@ -55,14 +55,23 @@ function sourcery_ctools_plugin_directory($module, $plugin) {
 }
 
 /**
- * Implements HOOK_ctools_plugin_TYPE()
+ * Implements HOOK_ctools_plugin_type()
  *
- * Inform CTools about mapper plugins
+ * Inform CTools about our plugins
  */
-function sourcery_ctools_plugin() {
-  return array(
-    'cache' => FALSE, // change to true for release
+function sourcery_ctools_plugin_type() {
+  $items = array();
+  $items['source'] = array(
+    'cache' => FALSE,
   );
+  $items['transport'] = array(
+    'cache' => FALSE,
+  );
+  $items['parser'] = array(
+    'cache' => FALSE,
+  );
+
+  return $items;
 }
 
 /**
