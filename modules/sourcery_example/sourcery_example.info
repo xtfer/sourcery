@@ -2,4 +2,6 @@ name = Sourcery Examples
 description = "Examples for implementing and using Sourcery."
 core = 7.x
 
+package = Sourcery
+
 php = 5.3
