@@ -1,0 +1,7 @@
+name = Sourcery Tests
+description = "Plugins designed to test Sourcery functionality."
+core = 7.x
+
+package = Sourcery
+
+php = 5.3

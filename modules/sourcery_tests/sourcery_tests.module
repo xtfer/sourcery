@@ -1,0 +1,19 @@
+<?php
+/**
+ * @file
+ *  Test plugins for Sourcery
+ * @copyright Copyright(c) 2012 Christopher Skene
+ * @license GPL v2 http://www.fsf.org/licensing/licenses/gpl.html
+ * @author Chris Skene chris at xtfer dot com
+ */
+
+/**
+ * Implements HOOK_ctools_plugin_directory()
+ *
+ * Tell ctools where our plugins live.
+ */
+function sourcery_tests_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'sourcery') {
+    return 'plugins/' . $plugin;
+  }
+}
