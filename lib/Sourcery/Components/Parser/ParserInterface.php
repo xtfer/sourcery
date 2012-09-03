@@ -6,7 +6,7 @@
  * @license GPL v2 http://www.fsf.org/licensing/licenses/gpl.html
  * @author Chris Skene chris at xtfer dot com
  */
-namespace Sourcery\Components\Parser;
+namespace Drupal\sourcery\Components\Parser;
 
 interface ParserInterface {
 

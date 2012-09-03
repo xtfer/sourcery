@@ -6,19 +6,19 @@
  * @license GPL v2 http://www.fsf.org/licensing/licenses/gpl.html
  * @author Chris Skene chris at xtfer dot com
  */
-namespace Sourcery\Components\Source;
+namespace Drupal\sourcery\Components\Source;
 
 /**
  * Defines a basic Source which other plugins can extend
  */
 class Source
-  implements \Sourcery\Components\Source\SourceInterface {
+  implements \Drupal\sourcery\Components\Source\SourceInterface {
 
   /**
    * Stores the active collection
    *
    * Note this can't actually be set unless the object implements
-   * \Sourcery\Components\Source\SourceCollectionInterface
+   * \Drupal\sourcery\Components\Source\SourceCollectionInterface
    *
    * @var string
    */
@@ -62,10 +62,10 @@ class Source
    *  - Load default parameters from the Source object
    *  - Do any other setup required to prepare a Source for use
    *
-   * @param \Sourcery\Components\Request\Request $request
+   * @param \Drupal\sourcery\Components\Request\Request $request
    *  A request object
    */
-  public function prepare(\Sourcery\Components\Request\Request $request) {
+  public function prepare(\Drupal\sourcery\Components\Request\Request $request) {
     // Nothing to do here
   }
 }

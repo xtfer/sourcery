@@ -21,17 +21,17 @@ $plugin = array(
  * This is a simplified version of the default transport plugin
  */
 class SourceryExampleTransport
-  extends \Sourcery\Components\Transport\Transport
-  implements \Sourcery\Components\Actions\Read {
+  extends \Drupal\sourcery\Components\Transport\Transport
+  implements \Drupal\sourcery\Components\Actions\Read {
 
   /**
    * Request to 'read' an object at a remote source
    *
-   * @param \Sourcery\Components\Request\Request $request
+   * @param \Drupal\sourcery\Components\Request\Request $request
    *
    * @return mixed
    */
-  public function actionRead(\Sourcery\Components\Request\Request $request) {
+  public function actionRead(\Drupal\sourcery\Components\Request\Request $request) {
     $url = $request->getDestination();
     $options = $request->requestArgs;
 

@@ -6,7 +6,7 @@
  * @license GPL v2 http://www.fsf.org/licensing/licenses/gpl.html
  * @author Chris Skene chris at xtfer dot com
  */
-namespace Sourcery\Components;
+namespace Drupal\sourcery\Components;
 
 /**
  * Define a default action
@@ -21,21 +21,21 @@ class Sourcerer {
   /**
    * The Source object
    *
-   * @var \Sourcery\Components\Source\SourceInterface
+   * @var \Drupal\sourcery\Components\Source\SourceInterface
    */
   protected $source;
 
   /**
    * The Transport
    *
-   * @var \Sourcery\Components\Transport\TransportInterface
+   * @var \Drupal\sourcery\Components\Transport\TransportInterface
    */
   protected $transport;
 
   /**
    * The Parser
    *
-   * @var \Sourcery\Components\Parser\ParserInterface
+   * @var \Drupal\sourcery\Components\Parser\ParserInterface
    */
   protected $parser;
 
@@ -95,13 +95,13 @@ class Sourcerer {
    * Set a collection parameter on the Source
    *
    * This will only work for Source plugins which implement the interface
-   * \Sourcery\Components\Source\SourceCollectionInterface
+   * \Drupal\sourcery\Components\Source\SourceCollectionInterface
    *
    * @param string $collection_name
    *  Name of the collection to use
    */
   public function setCollection($collection_name) {
-    if ($this->source instanceof \Sourcery\Components\Source\SourceCollectionInterface){
+    if ($this->source instanceof \Drupal\sourcery\Components\Source\SourceCollectionInterface){
       $this->source->setCollection($collection_name);
     }
   }
@@ -116,7 +116,7 @@ class Sourcerer {
    *  The name of the corresponding Interface, or FALSE if none exists
    */
   protected function actionToInterface($action) {
-    $interface = '\Sourcery\Actions\action' . ucfirst($action);
+    $interface = '\Drupal\sourcery\Actions\action' . ucfirst($action);
     if (interface_exists($interface)) {
       return $interface;
     }
@@ -166,7 +166,7 @@ class Sourcerer {
       }
 
       // Prepare the Request object
-      $request = new \Sourcery\Components\Request\Request($action);
+      $request = new \Drupal\sourcery\Components\Request\Request($action);
       $request->setDestination($destination);
       $request->setData($data);
       $request->requestArgs = $request_args;

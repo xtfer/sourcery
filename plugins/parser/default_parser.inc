@@ -21,10 +21,10 @@ $plugin = array(
  * This plugin merely returns data passed into it, without change.
  */
 class SourceryDefaultParser
-  implements \Sourcery\Components\Parser\ParserInterface {
+  implements \Drupal\sourcery\Components\Parser\ParserInterface {
 
   /**
-   * Implements \Sourcery\Components\Interfaces\ParserInterface::extract
+   * Implements \Drupal\sourcery\Components\Interfaces\ParserInterface::extract
    *
    * @param $data
    *  The fetched data from which to extract keys

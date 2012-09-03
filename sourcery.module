@@ -103,13 +103,13 @@ function sourcery_load_plugins($type) {
  * @param string $plugin [optional]
  *  The source plugin to use. Defaults to 'default_source'.
  *
- * @return \Sourcery\Components\Sourcerer
+ * @return \Drupal\sourcery\Components\Sourcerer
  *  A controller to handle requests to the source
  */
 function sourcery_source($plugin = SOURCERY_DEFAULT_SOURCE_PLUGIN) {
 
   // Create the Sourcery Sourcerer to handle the request
-  $sourcery = new \Sourcery\Components\Sourcerer($plugin);
+  $sourcery = new \Drupal\sourcery\Components\Sourcerer($plugin);
 
   return $sourcery;
 }
@@ -120,14 +120,14 @@ function sourcery_source($plugin = SOURCERY_DEFAULT_SOURCE_PLUGIN) {
  * @param string $plugin_name
  *  Name of the source type to invoke
  *
- * @return \Sourcery\Components\Source\SourceInterface|bool
+ * @return \Drupal\sourcery\Components\Source\SourceInterface|bool
  *  The source, or FALSE
  */
 function sourcery_invoke_source($plugin_name = SOURCERY_DEFAULT_SOURCE_PLUGIN) {
   $config = sourcery_load_plugin('source', $plugin_name);
   if (class_exists($config['class'])) {
     $source = new $config['class']();
-    if ($source instanceof \Sourcery\Components\Source\SourceInterface) {
+    if ($source instanceof \Drupal\sourcery\Components\Source\SourceInterface) {
       if (sourcery_prerequisites($config)) {
         return $source;
       }
@@ -143,14 +143,14 @@ function sourcery_invoke_source($plugin_name = SOURCERY_DEFAULT_SOURCE_PLUGIN) {
  * @param string $type
  *  Name of the parser type to invoke
  *
- * @return \Sourcery\Components\Parser\ParserInterface|bool
+ * @return \Drupal\sourcery\Components\Parser\ParserInterface|bool
  *  The parser, or FALSE
  */
 function sourcery_invoke_parser($type) {
   $config = sourcery_load_plugin('parser', $type);
   if (class_exists($config['class'])) {
     $parser = new $config['class']();
-    if ($parser instanceof \Sourcery\Components\Parser\ParserInterface) {
+    if ($parser instanceof \Drupal\sourcery\Components\Parser\ParserInterface) {
       if (sourcery_prerequisites($config)) {
         return $parser;
       }
@@ -166,14 +166,14 @@ function sourcery_invoke_parser($type) {
  * @param string $type
  *  Name of the transport type to invoke
  *
- * @return \Sourcery\Components\Transport\TransportInterface|bool
+ * @return \Drupal\sourcery\Components\Transport\TransportInterface|bool
  *  The parser, or FALSE
  */
 function sourcery_invoke_transport($type) {
   $config = sourcery_load_plugin('parser', $type);
   if (class_exists($config['class'])) {
     $transport = new $config['class']();
-    if ($transport instanceof \Sourcery\Components\Transport\TransportInterface) {
+    if ($transport instanceof \Drupal\sourcery\Components\Transport\TransportInterface) {
       if (sourcery_prerequisites($config)) {
         return $transport;
       }

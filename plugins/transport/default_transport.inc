@@ -19,8 +19,8 @@ $plugin = array(
  * A transport for drupal_http_request
  */
 class SourceryDefaultTransport
-  extends \Sourcery\Components\Transport\Transport
-  implements \Sourcery\Components\Actions\Read {
+  extends \Drupal\sourcery\Components\Transport\Transport
+  implements \Drupal\sourcery\Components\Actions\Read {
 
   /**
    * Options array for drupal_http_request
@@ -35,7 +35,7 @@ class SourceryDefaultTransport
   /**
    * Retrieve a resource from a source
    */
-  protected function request(\Sourcery\Components\Request\Request $request) {
+  protected function request(\Drupal\sourcery\Components\Request\Request $request) {
     $result = drupal_http_request($this->url, $this->options);
     if ($result->code != 200) {
       watchdog('sourcery', 'Request failed with error code: @code', array('@code' => $result->code), WATCHDOG_NOTICE);
@@ -49,11 +49,11 @@ class SourceryDefaultTransport
   /**
    * Request to 'read' an object at a remote source
    *
-   * @param \Sourcery\Components\Request\Request $request
+   * @param \Drupal\sourcery\Components\Request\Request $request
    *
    * @return mixed
    */
-  public function actionRead(\Sourcery\Components\Request\Request $request) {
+  public function actionRead(\Drupal\sourcery\Components\Request\Request $request) {
 
     // Build our $options array including the $data payload
     $this->options = $request->requestArgs;

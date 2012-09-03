@@ -16,9 +16,9 @@ $plugin = array(
 );
 
 class SourceryExampleSource
-  extends \Sourcery\Components\Source\Source
-  implements \Sourcery\Components\Source\SourceCollectionInterface,
-  \Sourcery\Components\Actions\Read {
+  extends \Drupal\sourcery\Components\Source\Source
+  implements \Drupal\sourcery\Components\Source\SourceCollectionInterface,
+  \Drupal\sourcery\Components\Actions\Read {
 
   /**
    * Set a Collection property on the object.
@@ -36,9 +36,9 @@ class SourceryExampleSource
    *
    * This gets the $collection value, if set, and uses it to
    *
-   * @param Sourcery\Components\Request\Request $request
+   * @param Drupal\sourcery\Components\Request\Request $request
    */
-  public function prepare(\Sourcery\Components\Request\Request $request) {
+  public function prepare(\Drupal\sourcery\Components\Request\Request $request) {
 
     // We're storing the key as the destination, so swap it out
     $key = $request->getDestination();
@@ -56,11 +56,11 @@ class SourceryExampleSource
   /**
    * Request to 'read' an object at a remote source
    *
-   * @param \Sourcery\Components\Request\Request $request
+   * @param \Drupal\sourcery\Components\Request\Request $request
    *
    * @return mixed
    */
-  public function actionRead(\Sourcery\Components\Request\Request $request) {
+  public function actionRead(\Drupal\sourcery\Components\Request\Request $request) {
     // Do nothing
   }
 

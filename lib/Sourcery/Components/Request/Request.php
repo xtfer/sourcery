@@ -6,7 +6,7 @@
  * @license GPL v2 http://www.fsf.org/licensing/licenses/gpl.html
  * @author Chris Skene chris at xtfer dot com
  */
-namespace Sourcery\Components\Request;
+namespace Drupal\sourcery\Components\Request;
 
 /**
  * Placeholder for when arguments are not provided (allows arguments to be NULL)

@@ -6,13 +6,13 @@
  * @license GPL v2 http://www.fsf.org/licensing/licenses/gpl.html
  * @author Chris Skene chris at xtfer dot com
  */
-namespace Sourcery\Components\Source;
+namespace Drupal\sourcery\Components\Source;
 
 /**
  * Defines an interface for a Source
  *
  * Every Source plugin needs to define this interface to be recognised by the
- * Sourcery. The base \Sourcery\Components\Source\Source object implements this
+ * Sourcery. The base \Drupal\sourcery\Components\Source\Source object implements this
  * interface, so it can be extended to ensure that base methods are all fulfilled.
  */
 interface SourceInterface {
@@ -57,8 +57,8 @@ interface SourceInterface {
    *  - Load default parameters from the Source object
    *  - Do any other setup required to prepare a Source for use
    *
-   * @param \Sourcery\Components\Request\Request $request
+   * @param \Drupal\sourcery\Components\Request\Request $request
    *  A request object
    */
-  public function prepare(\Sourcery\Components\Request\Request $request);
+  public function prepare(\Drupal\sourcery\Components\Request\Request $request);
 }

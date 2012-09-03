@@ -21,10 +21,10 @@ $plugin = array(
  * This is identical to the JSON Parser in Sourcery.
  */
 class SourceryExampleParser
-  implements \Sourcery\Components\Parser\ParserInterface {
+  implements \Drupal\sourcery\Components\Parser\ParserInterface {
 
   /**
-   * Implements \Sourcery\Components\Parser\ParserInterface::extract
+   * Implements \Drupal\sourcery\Components\Parser\ParserInterface::extract
    *
    * @param $raw_data
    *  The fetched data from which to extract keys
